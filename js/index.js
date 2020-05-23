@@ -283,9 +283,9 @@ function searchQue(){
   input = document.getElementById("searchString");
   que = input.value.toUpperCase();
   mainContainer = document.getElementById("cardFillSub");
-  searchItem = document.getElementsByTagName("card");
+  searchItem = document.getElementsByTagName("tr");
   for (i = 0; i < searchItem.length; i++) {
-      title = searchItem[i].getElementsByTagName("p")[0];
+      title = searchItem[i].getElementsByTagName("td")[0];
       txtValue = title.textContent || title.innerText;
       if (txtValue.toUpperCase().indexOf(que) > -1) {
           searchItem[i].style.display = "";
@@ -306,7 +306,7 @@ function loadSub(){
               for(prop in data.val()){
                 DB.ref('Odyssey/' + property + "/" + prop).on("value", function(data){
                   for(res in data.val()){
-                    addArray(res, 'Odyssey/' + property + "/" + prop + "/" + res)
+                    addArray(prop + " : " + res, 'Odyssey/' + property + "/" + prop + "/" + res)
                     document.getElementById("ResourceCount").innerText = Number(document.getElementById("ResourceCount").innerText) + 1
                   }
                 })
@@ -325,23 +325,11 @@ function addArray(msg,path){
 }
 
 function addSub(){
+  document.getElementById("loadbutton").style.display = "none"
+  document.getElementById("cardFillSub").innerHTML = ""
+  alert("This Would Take A Little While, Please Be Patient")
   for (i in msgArr){
-    document.getElementById("cardFillSub").innerHTML += `
-    <!-- Card Start -->
-    <card><br>
-      <div class="field has-addons">
-        <p class="control is-expanded">
-          <input class="input" type="text" value="`+ msgArr[i] + `" readonly>
-        </p>
-        <p class="control">
-          <a class="button">
-            Transfer
-          </a>
-        </p>
-      </div>
-    </card>
-    <!-- Card End -->
-    ` 
+    document.getElementById("cardFillSub").innerHTML += `<tr><td>`+msgArr[i]+`</td><td class="button is-danger" onclick="RemoveSub('`+patArr[i]+`')"><i class="fas fa-trash-alt"></i></td></tr>` 
   }
 }
 
@@ -353,6 +341,7 @@ function RemoveSub(key){
   }else {
     alert("Remove Request Declined")
   }
+  location.reload();
 }
 
 document.getElementById("DataEntry").style.display = "none"
