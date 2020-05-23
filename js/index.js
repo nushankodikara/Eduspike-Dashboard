@@ -249,7 +249,7 @@ function login(){
 }
 
 function hideLogin(){
-  document.getElementById("TitleBar").innerHTML = "- Welcome Administrator -"
+  document.getElementById("TitleBar").innerHTML = "Welcome Administrator"
   document.getElementById("navBar").style.display = ""
   init()
   loadMSG()
