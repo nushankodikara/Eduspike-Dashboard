@@ -74,9 +74,9 @@ function addReport(msg){
             <p class="card-header-title">
               “`+ msg.val().key +`”
             </p>
-            <a href="#" onclick="RemoveReport('`+ msg.key +`')" class="card-header-icon" aria-label="more options">
+            <a href="#" onclick="RemoveReport('`+ msg.key +`')" class="button is-danger card-header-icon" aria-label="more options">
               <span class="icon">
-                <i class="far fa-times-circle" aria-hidden="true"></i>
+                <i class="fas fa-trash-alt" aria-hidden="true"></i>
               </span>
             </a>  
           </div>
@@ -113,9 +113,9 @@ function addAnn(msg){
             <p class="card-header-title">
               “`+ msg.val().key +`”
             </p>
-            <a href="#" onclick="RemoveBroad('`+ msg.key +`')" class="card-header-icon" aria-label="more options">
+            <a href="#" onclick="RemoveBroad('`+ msg.key +`')" class="button is-danger card-header-icon" aria-label="more options">
               <span class="icon">
-                <i class="far fa-times-circle" aria-hidden="true"></i>
+                <i class="fas fa-trash-alt" aria-hidden="true"></i>
               </span>
             </a>  
           </div>
