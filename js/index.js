@@ -206,7 +206,9 @@ function resources(){
   document.getElementById("RE").className = ""
   document.getElementById("AN").className = ""
   document.getElementById("SR").className = "is-active"
+  alert("This Will Take Sometime, Please Be Paitent!")
   loadSub()
+  alert("Loded Successfully, Sorry For The Inconvenience")
 }
 
 function postData(){
