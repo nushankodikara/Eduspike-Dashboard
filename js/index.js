@@ -24,6 +24,8 @@ function loadMSG(){
       });
   })
 
+  loadSub()
+
 }
 
 function countAll(){
@@ -206,9 +208,6 @@ function resources(){
   document.getElementById("RE").className = ""
   document.getElementById("AN").className = ""
   document.getElementById("SR").className = "is-active"
-  alert("This Will Take Sometime, Please Be Patient!")
-  loadSub()
-  alert("Loded Successfully, Sorry For The Inconvenience")
 }
 
 function postData(){
@@ -307,7 +306,7 @@ function loadSub(){
               for(prop in data.val()){
                 DB.ref('Odyssey/' + property + "/" + prop).on("value", function(data){
                   for(res in data.val()){
-                    addSub(res, 'Odyssey/' + property + "/" + prop + "/" + res)
+                    addArray(res, 'Odyssey/' + property + "/" + prop + "/" + res)
                     document.getElementById("ResourceCount").innerText = Number(document.getElementById("ResourceCount").innerText) + 1
                   }
                 })
@@ -317,27 +316,33 @@ function loadSub(){
   })
 }
 
-function addSub(msg, path){
-  document.getElementById("cardFillSub").innerHTML += `
-  <!-- Card Start -->
-  <card><br>
-    <div class="content">
-      <div class="card">
-        <div class="card-header">
-          <p class="card-header-title">
-            “`+ msg +`”
-          </p>
-          <a href="#" onclick="RemoveSub('`+ path +`')" class="card-header-icon" aria-label="more options">
-            <span class="icon">
-              <i class="far fa-times-circle" aria-hidden="true"></i>
-            </span>
-          </a>  
-        </div>
+msgArr = []
+patArr = []
+
+function addArray(msg,path){
+  msgArr.push(msg)
+  patArr.push(path)
+}
+
+function addSub(){
+  for (i in msgArr){
+    document.getElementById("cardFillSub").innerHTML += `
+    <!-- Card Start -->
+    <card><br>
+      <div class="field has-addons">
+        <p class="control is-expanded">
+          <input class="input" type="text" value="`+ msgArr[i] + `" readonly>
+        </p>
+        <p class="control">
+          <a class="button">
+            Transfer
+          </a>
+        </p>
       </div>
-    </div>
-  </card>
-  <!-- Card End -->
-  `
+    </card>
+    <!-- Card End -->
+    ` 
+  }
 }
 
 function RemoveSub(key){
