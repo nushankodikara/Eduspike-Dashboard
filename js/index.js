@@ -206,7 +206,7 @@ function resources(){
   document.getElementById("RE").className = ""
   document.getElementById("AN").className = ""
   document.getElementById("SR").className = "is-active"
-  alert("This Will Take Sometime, Please Be Paitent!")
+  alert("This Will Take Sometime, Please Be Patient!")
   loadSub()
   alert("Loded Successfully, Sorry For The Inconvenience")
 }
