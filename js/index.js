@@ -1,20 +1,5 @@
 function loadMSG(){
   Ammount = 25
-  ref1 = firebase.database().ref("Feedbacks").limitToLast(Ammount)
-  ref1.on("value", function(snapshot) {
-      document.getElementById("Feedbacks").innerHTML = ""
-      snapshot.forEach(function(Feedbacks){
-          addFeedback(Feedbacks)
-      });
-  })
-
-  ref2 = firebase.database().ref("Reports").limitToLast(Ammount)
-  ref2.on("value", function(snapshot) {
-      document.getElementById("Reports").innerHTML = ""
-      snapshot.forEach(function(Reports){
-          addReport(Reports)
-      });
-  })
 
   ref3 = firebase.database().ref("Announcements").limitToLast(Ammount)
   ref3.on("value", function(snapshot) {
@@ -28,32 +13,6 @@ function loadMSG(){
 
 }
 
-function countAll(){
-  countBC()
-  countFeedback()
-  countReports()
-}
-
-function countFeedback(){
-  counter = firebase.database().ref("Feedbacks")
-  counter.on("value", function(snapshot) {
-      document.getElementById("Feedcount").innerText = 0
-      snapshot.forEach(function(rep){
-        document.getElementById("Feedcount").innerText = Number(document.getElementById("Feedcount").innerText) + 1
-      });
-  })
-}
-
-function countReports(){
-  counter = firebase.database().ref("Reports")
-  counter.on("value", function(snapshot) {
-      document.getElementById("Reportcount").innerText = 0
-      snapshot.forEach(function(rep){
-        document.getElementById("Reportcount").innerText = Number(document.getElementById("Reportcount").innerText) + 1
-      });
-  })
-}
-
 function countBC(){
   counter = firebase.database().ref("Announcements")
   counter.on("value", function(snapshot) {
@@ -62,45 +21,6 @@ function countBC(){
         document.getElementById("BroadcastCount").innerText = Number(document.getElementById("BroadcastCount").innerText) + 1
       });
   })
-}
-
-function addReport(msg){
-    document.getElementById("Reports").innerHTML += `
-    <!-- Card Start -->
-    <br>
-      <div class="content">
-        <div class="card">
-          <div class="card-header">
-            <p class="card-header-title">
-              “`+ msg.val().key +`”
-            </p>
-            <a href="#" onclick="RemoveReport('`+ msg.key +`')" class="button is-danger card-header-icon" aria-label="more options">
-              <span class="icon">
-                <i class="fas fa-trash-alt" aria-hidden="true"></i>
-              </span>
-            </a>  
-          </div>
-        </div>
-      </div>
-    <!-- Card End -->
-    `
-}
-
-function addFeedback(msg){
-  document.getElementById("Feedbacks").innerHTML += `
-  <!-- Card Start -->
-  <br>
-    <div class="content">
-      <div class="card">
-        <div class="card-content">
-          <p class="title is-5">
-            “`+ msg.val().key +`”
-          </p>
-        </div>
-      </div>
-    </div>
-  <!-- Card End -->
-  `
 }
 
 function addAnn(msg){
@@ -145,65 +65,45 @@ function RemoveBroad(ref){
 
 function init(){
     document.getElementById("DataEntry").style.display = ""
-    document.getElementById("Feedbacks").style.display = "none"
-    document.getElementById("Reports").style.display = "none"
     document.getElementById("Announcements").style.display = "none"
     document.getElementById("SubjectResources").style.display = "none"
     document.getElementById("DE").className = "is-active"
-    document.getElementById("FB").className = ""
-    document.getElementById("RE").className = ""
     document.getElementById("AN").className = ""
     document.getElementById("SR").className = ""
 }
 
 function feedback(){
     document.getElementById("DataEntry").style.display = "none"
-    document.getElementById("Feedbacks").style.display = ""
-    document.getElementById("Reports").style.display = "none"
     document.getElementById("Announcements").style.display = "none"
     document.getElementById("SubjectResources").style.display = "none"
     document.getElementById("DE").className = ""
-    document.getElementById("FB").className = "is-active"
-    document.getElementById("RE").className = ""
     document.getElementById("AN").className = ""
     document.getElementById("SR").className = ""
 }
 
 function reports(){
     document.getElementById("DataEntry").style.display = "none"
-    document.getElementById("Feedbacks").style.display = "none"
-    document.getElementById("Reports").style.display = ""
     document.getElementById("Announcements").style.display = "none"
     document.getElementById("SubjectResources").style.display = "none"
     document.getElementById("DE").className = ""
-    document.getElementById("FB").className = ""
-    document.getElementById("RE").className = "is-active"
     document.getElementById("AN").className = ""
     document.getElementById("SR").className = ""
 }
 
 function announcements(){
   document.getElementById("DataEntry").style.display = "none"
-  document.getElementById("Feedbacks").style.display = "none"
-  document.getElementById("Reports").style.display = "none"
   document.getElementById("Announcements").style.display = ""
   document.getElementById("SubjectResources").style.display = "none"
   document.getElementById("DE").className = ""
-  document.getElementById("FB").className = ""
-  document.getElementById("RE").className = ""
   document.getElementById("AN").className = "is-active"
   document.getElementById("SR").className = ""
 }
 
 function resources(){
   document.getElementById("DataEntry").style.display = "none"
-  document.getElementById("Feedbacks").style.display = "none"
-  document.getElementById("Reports").style.display = "none"
   document.getElementById("Announcements").style.display = "none"
   document.getElementById("SubjectResources").style.display = ""
   document.getElementById("DE").className = ""
-  document.getElementById("FB").className = ""
-  document.getElementById("RE").className = ""
   document.getElementById("AN").className = ""
   document.getElementById("SR").className = "is-active"
 }
@@ -252,7 +152,7 @@ function hideLogin(){
   document.getElementById("navBar").style.display = ""
   init()
   loadMSG()
-  countAll()
+  countBC()
 }
 
 function wrightResources(SUB, RES, TYP, DES, LIN) {
@@ -362,8 +262,6 @@ function RemoveSub(key){
 }
 
 document.getElementById("DataEntry").style.display = "none"
-document.getElementById("Feedbacks").style.display = "none"
-document.getElementById("Reports").style.display = "none"
 document.getElementById("navBar").style.display = "none"
 document.getElementById("Announcements").style.display = "none"
 document.getElementById("SubjectResources").style.display = "none"
