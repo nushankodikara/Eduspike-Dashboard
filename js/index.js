@@ -110,9 +110,7 @@ function addAnn(msg){
       <div class="content">
         <div class="card">
           <div class="card-header">
-            <p class="card-header-title">
-              “`+ msg.val().key +`”
-            </p>
+            <p class="card-header-title">“`+ msg.val().key +`”</p>
             <a href="#" onclick="RemoveBroad('`+ msg.key +`')" class="button is-danger card-header-icon" aria-label="more options">
               <span class="icon">
                 <i class="fas fa-trash-alt" aria-hidden="true"></i>
@@ -299,7 +297,8 @@ function searchQue(){
 function loadSub(){
   DB = firebase.database()
   DB.ref('Odyssey').on("value", function(data){
-      document.getElementById("cardFillSub").innerHTML = ""
+      msgArr = []
+      patArr = []
       document.getElementById("ResourceCount").innerHTML = "0"
       for(property in data.val()){
         DB.ref('Odyssey/' + property).on("value", function(data){
@@ -313,6 +312,7 @@ function loadSub(){
               }
           })
       }
+      Addpaginate(50,1)
   })
 }
 
@@ -324,12 +324,29 @@ function addArray(msg,path){
   patArr.push(path)
 }
 
-function addSub(){
-  document.getElementById("loadbutton").style.display = "none"
-  document.getElementById("cardFillSub").innerHTML = ""
-  alert("This Would Take A Little While, Please Be Patient")
-  for (i in msgArr){
-    document.getElementById("cardFillSub").innerHTML += `<tr><td>`+msgArr[i]+`</td><td class="button is-danger" onclick="RemoveSub('`+patArr[i]+`')"><i class="fas fa-trash-alt"></i></td></tr>` 
+function paginate(array, page_size, page_number) {
+  return array.slice((page_number - 1) * page_size, page_number * page_size);
+}
+
+function Addpaginate(pagesize, page){
+  document.getElementById("SubSection").innerHTML = `
+  <table id="cardFillSub" class="table is-fullwidth"></table>
+  <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+    <ul id="pages" class="pagination-list">
+    </ul>
+  </nav>
+  `
+
+  pagelenth = (Math.floor(msgArr.length/pagesize)+1).toString()
+  pageddata = paginate(msgArr, pagesize, page);
+  pagedpath = paginate(patArr, pagesize, page);
+
+  for (var abc=0 ; pagelenth > abc ; abc++ ){
+    document.getElementById("pages").innerHTML += `<li class="pagination-link" onclick="Addpaginate(` + pagesize + `, ` + (abc+1) + `)">` + (abc+1) + `</li>`
+  }
+
+  for (i in pageddata){
+    document.getElementById("cardFillSub").innerHTML += `<tr><td>`+pageddata[i]+`</td><td class="button is-danger" onclick="RemoveSub('`+pagedpath[i]+`')"><i class="fas fa-trash-alt"></i></td></tr>` 
   }
 }
 
